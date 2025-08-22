@@ -38,7 +38,14 @@ public class Player : MonoBehaviour
             if (Keyboard.current.dKey.isPressed) input.x += 1f;
         }
 
-        Vector3 direction = new Vector3(input.x, 0, input.y);
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 direction = camForward * input.y + camRight * input.x;
         if (direction.sqrMagnitude > 1f) direction.Normalize();
 
         if (direction.sqrMagnitude > 0.01f)
